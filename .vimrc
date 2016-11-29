@@ -16,3 +16,8 @@ set lazyredraw
 
 nnoremap j gj
 nnoremap k gk
+
+set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+colorscheme solarized
