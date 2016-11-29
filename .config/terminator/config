@@ -9,18 +9,24 @@
     #foreground_color = "#eee8d5"
     #background_color = "#002b36"
     #cursor_color = "#eee8d5"
+    custom_command = TERM=xterm-256color bash -l # Do not use 'terminator' here
+    use_custom_command = True
 
   [[solarized-dark]]
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#586e75:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     foreground_color = "#eee8d5"
     background_color = "#002b36"
     cursor_color = "#eee8d5"
+    custom_command = TERM=xterm-256color bash -l # Do not use 'terminator' here
+    use_custom_command = True
 
   [[solarized-light]]
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     background_color = "#eee8d5"
     foreground_color = "#002b36"
     cursor_color = "#002b36"
+    custom_command = TERM=xterm-256color bash -l # Do not use 'terminator' here
+    use_custom_command = True
 
 [layouts]
   [[default]]
