@@ -1,0 +1,3 @@
+# This file prevents bash-completion from loading from its /etc/profile.d
+# script if installed
+shopt -u progcomp
