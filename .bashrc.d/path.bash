@@ -13,5 +13,6 @@ pathmunge () {
 
 pathmunge "${HOME}/.cargo/bin"
 pathmunge "${HOME}/go/bin"
+pathmunge "${HOME}/bin"
 
 unset -f pathmunge
