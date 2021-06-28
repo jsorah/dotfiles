@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+session_name=${1:-default}
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t $session_name || tmux new -s $session_name
+else
+    echo "Already in a tmux session!"
+fi
