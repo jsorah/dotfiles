@@ -14,6 +14,8 @@ set number
 set showcmd
 set cursorline
 
+set mouse=a
+
 filetype indent on
 
 set lazyredraw
