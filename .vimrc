@@ -1,6 +1,8 @@
 call plug#begin()
 Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'dense-analysis/ale'
 call plug#end()
 syntax enable
 
@@ -23,10 +25,7 @@ set lazyredraw
 nnoremap j gj
 nnoremap k gk
 
-set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-colorscheme solarized
+colorscheme meta5
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
@@ -42,4 +41,6 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 
 nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>o :NERDTreeToggle<CR>
+nnoremap <leader>! :set invnumber<CR>
 
