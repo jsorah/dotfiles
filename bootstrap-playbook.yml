@@ -41,5 +41,8 @@
       ansible.builtin.git:
         repo: https://github.com/sharkdp/bat.git
         dest: "{{ software_repos_path }}/bat"
-
-
+    # fzf gets cloned to the home dir as .fzf
+    - name: clone fzf
+      ansible.builtin.git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: "{{ home }}/.fzf"
