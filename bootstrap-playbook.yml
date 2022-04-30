@@ -1,0 +1,45 @@
+---
+- name: Install python based utilities
+  hosts: localhost
+
+  tasks:
+    - name: httpie
+      ansible.builtin.pip:
+        name: httpie
+        state: latest
+    - name: jarg
+      ansible.builtin.pip:
+        name: jarg
+        state: latest
+- name: bootstrap code repos
+  hosts: localhost
+  vars:
+    - "home": "{{ lookup('env', 'HOME') }}"
+    - "software_repos_path": "{{ home }}/repos-software"
+  tasks:
+    - name: create software repos dir
+      file:
+        path: "{{ software_repos_path }}"
+        state: directory
+    - name: clone r2
+      ansible.builtin.git:
+        repo: https://github.com/radareorg/radare2.git
+        dest: "{{ software_repos_path }}/radare2" 
+    - name: clone ImHex
+      ansible.builtin.git:
+        repo: https://github.com/WerWolv/ImHex.git
+        dest: "{{ software_repos_path }}/ImHex"
+    - name: clone dive
+      ansible.builtin.git:
+        repo: https://github.com/wagoodman/dive.git
+        dest: "{{ software_repos_path }}/dive"
+    - name: clone k9s
+      ansible.builtin.git:
+        repo: https://github.com/derailed/k9s.git
+        dest: "{{ software_repos_path }}/k9s"
+    - name: clone bat
+      ansible.builtin.git:
+        repo: https://github.com/sharkdp/bat.git
+        dest: "{{ software_repos_path }}/bat"
+
+
