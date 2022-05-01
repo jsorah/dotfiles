@@ -1,7 +1,6 @@
 ---
 - name: Install python based utilities
   hosts: localhost
-
   tasks:
     - name: install global python utilities
       ansible.builtin.pip:
