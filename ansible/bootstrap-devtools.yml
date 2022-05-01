@@ -1,15 +1,21 @@
 ---
 - hosts: localhost 
+  vars:
+    - home: "{{ lookup('env', 'HOME') }}"
   tasks:
     - name: check if cargo is installed
       ansible.builtin.shell: command -v cargo
       register: cargo_exists
       ignore_errors: yes
     - name: check if go is installed
-      shell: command -v go
+      ansible.builtin.shell: command -v go
       register: go_exists
       ignore_errors: yes
-    - name: Download Installer
+    - name: check if minikube is installed
+      ansible.builtin.shell: command -v minikube
+      register: minikube_exists
+      ignore_errors: yes
+    - name: Download Cargo Installer
       when: cargo_exists is failed
       ansible.builtin.get_url:
         url: https://sh.rustup.rs
@@ -33,4 +39,18 @@
     # sdkman ?
     # sdkman java, quarkus, maven, gradle ?
     # nvm ?
+    - name: install minikube
+      when: minikube_exists is failed
+      ansible.builtin.get_url:
+        url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        dest: "{{ home }}/.local/bin/minikube"
+      tags:
+        - minikube
+    - name: check minikube executable
+      when: minikube_exists is failed
+      ansible.builtin.file:
+        dest: "{{ home }}/.local/bin/minikube"
+        mode: "a+x"
+      tags:
+        - minikube
 
