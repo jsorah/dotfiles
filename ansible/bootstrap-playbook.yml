@@ -41,13 +41,17 @@
     - name: copy files
       ansible.builtin.copy:
         dest: "{{ home }}/{{ item.dest }}"
+        mode: "{{ item.mode | default ('') }}"
         src: "{{ item.src }}"
         backup: yes
       loop:
         - dest: ".local/bin/mux"
           src: "../.local/bin/mux"
+          mode: "a+x"
         - dest: ".tmux.conf"
           src: "../.tmux.conf"
+      tags:
+        - vim
 - name: bootstrap vim
   hosts: localhost
   vars:
