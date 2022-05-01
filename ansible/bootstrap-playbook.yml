@@ -1,0 +1,26 @@
+---
+- name: Install python based utilities
+  hosts: localhost
+
+  tasks:
+    - name: install global python utilities
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: latest
+      loop:
+       - httpie
+       - jarg
+- name: bootstrap code repos
+  hosts: localhost
+  vars_files: repos-software.yml
+  vars:
+    - "home": "{{ lookup('env', 'HOME') }}"
+    - "repos_base_path": "{{ home }}/repos-software"
+    - "update_repos": "no"
+  tasks:
+    - name: "clone repos"
+      ansible.builtin.git:
+        repo: "{{item.repo}}"
+        dest: "{{item.dest}}"
+        update: "{{ update_repos }}"
+      loop: "{{ repos }}" 
