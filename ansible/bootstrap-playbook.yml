@@ -24,3 +24,54 @@
         dest: "{{item.dest}}"
         update: "{{ update_repos }}"
       loop: "{{ repos }}" 
+- name: copy configurations
+  hosts: localhost
+  vars:
+    - "home": "{{ lookup('env', 'HOME') }}"
+- name: bootstrap tmux
+  hosts: localhost
+  vars:
+    - home: "{{ lookup('env', 'HOME') }}"
+  tasks:
+    - name: create structure
+      ansible.builtin.file:
+        dest: "{{ home }}/{{ item }}"
+        state: "directory"
+      loop:
+        - ".local/bin"
+    - name: copy files
+      ansible.builtin.copy:
+        dest: "{{ home }}/{{ item.dest }}"
+        src: "{{ item.src }}"
+        backup: yes
+      loop:
+        - dest: ".local/bin/mux"
+          src: "../.local/bin/mux"
+        - dest: ".tmux.conf"
+          src: "../.tmux.conf"
+- name: bootstrap vim
+  hosts: localhost
+  vars:
+    - home: "{{ lookup('env', 'HOME') }}"
+  tasks:
+    - name: create vim structure
+      ansible.builtin.file:
+        dest: "{{ home }}/{{ item }}"
+        state: directory
+      loop:
+        - ".vim/autoload"
+        - ".vim/colors"
+    - name: download vimplug
+      ansible.builtin.get_url:
+        dest: "{{ home }}/.vim/autoload/"
+        url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    - name: download meta5 theme
+      ansible.builtin.get_url:
+        dest: "{{ home }}/.vim/colors/"
+        url: "https://raw.githubusercontent.com/christophermca/meta5/master/colors/meta5.vim"
+    - name: copy vimrc
+      ansible.builtin.copy:
+        dest: "{{ home }}/.vimrc"
+        src: "../.vimrc"
+        backup: yes
+
