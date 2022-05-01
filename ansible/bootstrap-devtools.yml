@@ -1,0 +1,36 @@
+---
+- hosts: localhost 
+  tasks:
+    - name: check if cargo is installed
+      ansible.builtin.shell: command -v cargo
+      register: cargo_exists
+      ignore_errors: yes
+    - name: check if go is installed
+      shell: command -v go
+      register: go_exists
+      ignore_errors: yes
+    - name: Download Installer
+      when: cargo_exists is failed
+      ansible.builtin.get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/sh.rustup.rs
+        mode: '0755'
+        force: 'yes'
+      tags:
+        - rust
+    - name: install rust/cargo
+      when: cargo_exists is failed
+      ansible.builtin.shell: /tmp/sh.rustup.rs -y
+      tags:
+        - rust
+    # go
+    - name: install go
+      when: go_exists is failed
+      ansible.builtin.debug:
+        msg: "haha, don't have this yet."
+      tags:
+        - go
+    # sdkman ?
+    # sdkman java, quarkus, maven, gradle ?
+    # nvm ?
+

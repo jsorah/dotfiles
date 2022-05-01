@@ -1,0 +1,13 @@
+---
+- name: bootstrap packages
+  hosts: localhost
+  tasks:
+    - name: "install fedora packages"
+      become: yes
+      ansible.builtin.dnf:
+        name: " {{item.name}} "
+        state: "{{item.state}}"
+      when: ansible_facts['distribution'] == 'Fedora'
+      loop:
+        - name: '@Development Tools'
+          state: present
