@@ -44,12 +44,6 @@
       ansible.builtin.get_url:
         url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
         dest: "{{ home }}/.local/bin/minikube"
-      tags:
-        - minikube
-    - name: check minikube executable
-      when: minikube_exists is failed
-      ansible.builtin.file:
-        dest: "{{ home }}/.local/bin/minikube"
         mode: "a+x"
       tags:
         - minikube
