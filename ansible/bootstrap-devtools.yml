@@ -1,7 +1,5 @@
 ---
 - hosts: localhost 
-  vars:
-    - home: "{{ lookup('env', 'HOME') }}"
   tasks:
     - name: check if cargo is installed
       ansible.builtin.shell: command -v cargo
@@ -32,8 +30,10 @@
     # go
     - name: install go
       when: go_exists is failed
-      ansible.builtin.debug:
-        msg: "haha, don't have this yet."
+      ansible.builtin.unarchive:
+        src: https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
+        remote_src: yes
+        dest: "{{ ansible_env.HOME}}/.local/"
       tags:
         - go
     # sdkman ?
@@ -43,7 +43,7 @@
       when: minikube_exists is failed
       ansible.builtin.get_url:
         url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-        dest: "{{ home }}/.local/bin/minikube"
+        dest: "{{ ansible_env.HOME }}/.local/bin/minikube"
         mode: "a+x"
       tags:
         - minikube
