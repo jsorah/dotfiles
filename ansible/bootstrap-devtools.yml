@@ -13,6 +13,11 @@
       ansible.builtin.shell: command -v minikube
       register: minikube_exists
       ignore_errors: yes
+    - name: check if sdkman is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.sdkman/bin/sdkman-init.sh"
+      register: sdkman_exists
+      ignore_errors: yes
     - name: Download Cargo Installer
       when: cargo_exists is failed
       ansible.builtin.get_url:
@@ -37,12 +42,21 @@
       tags:
         - go
     # sdkman ?
+    - name: download sdkman
+      when: sdkman_exists is failed
+      ansible.builtin.get_url:
+        url: "https://get.sdkman.io?rcupdate=false"
+        dest: "/tmp/sdkman-inst.sh"
+        mode: "a+x"
+    - name: install sdkman
+      when: sdkman_exists is failed
+      ansible.builtin.script: /tmp/sdkman-inst.sh
     # sdkman java, quarkus, maven, gradle ?
     # nvm ?
     - name: install minikube
       when: minikube_exists is failed
       ansible.builtin.get_url:
-        url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        url: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
         dest: "{{ ansible_env.HOME }}/.local/bin/minikube"
         mode: "a+x"
       tags:

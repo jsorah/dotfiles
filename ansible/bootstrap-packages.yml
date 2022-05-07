@@ -11,3 +11,5 @@
       loop:
         - name: '@Development Tools'
           state: present
+        - name: 'vim'
+          state: present
