@@ -2,14 +2,19 @@
 - name: bootstrap packages
   hosts: localhost
   tasks:
+    - name: "update everything already installed"
+      become: yes
+      ansible.builtin.dnf:
+        name: "*"
+        state: "latest"
+      when: ansible_facts['distribution'] == 'Fedora'
     - name: "install fedora packages"
       become: yes
       ansible.builtin.dnf:
-        name: " {{item.name}} "
-        state: "{{item.state}}"
+        name: "{{item}}"
+        state: "latest"
       when: ansible_facts['distribution'] == 'Fedora'
       loop:
-        - name: '@Development Tools'
-          state: present
-        - name: 'vim'
-          state: present
+        - '@Development Tools'
+        - 'vim'
+        - 'cmake'
