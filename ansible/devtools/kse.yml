@@ -1,0 +1,7 @@
+---
+- name: "keystore explorer"
+  ansible.builtin.unarchive:
+    creates: "{{ ansible_env.HOME }}/.local/tools/kse-551"
+    dest: "{{ ansible_env.HOME }}/.local/tools/"
+    src: "https://github.com/kaikramer/keystore-explorer/releases/download/v5.5.1/kse-551.zip"
+    remote_src: yes

@@ -1,6 +1,10 @@
 ---
 - hosts: localhost 
   tasks:
+    - name: create .local/tools dir
+      ansible.builtin.file:
+        state: directory
+        path: "{{ ansible_env.HOME}}/.local/tools/"
     - name: install tools
       ansible.builtin.include_tasks: 
        file: "devtools/{{item}}.yml"
@@ -12,6 +16,7 @@
         - "minikube"
         - "sdkman"
         - "nvm"
+        - "kse"
     - name: copy bashrc.d files
       ansible.builtin.copy:
         src: "files/bashrc.d/"
