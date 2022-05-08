@@ -27,4 +27,7 @@ repos:
   - name: "cutter"
     repo: "https://github.com/rizinorg/cutter.git"
     dest: "{{ repos_base_path}}/cutter"
+  - name: "gitmux"
+    repo: "https://github.com/arl/gitmux.git"
+    dest: "{{ repos_base_path }}/gitmux"
 

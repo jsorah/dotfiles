@@ -73,4 +73,9 @@
         mode: "a+x"
       tags:
         - minikube
+    - name: copy bashrc.d files
+      ansible.builtin.copy:
+        src: "files/bashrc.d/"
+        dest: "{{ ansible_env.HOME}}/bashrc.d"
+
 
