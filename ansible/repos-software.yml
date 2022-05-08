@@ -30,4 +30,7 @@ repos:
   - name: "gitmux"
     repo: "https://github.com/arl/gitmux.git"
     dest: "{{ repos_base_path }}/gitmux"
+  - name: "ripgrep"
+    repo: "https://github.com/BurntSushi/ripgrep.git"
+    dest: "{{ repos_base_path}}/ripgrep"
 
