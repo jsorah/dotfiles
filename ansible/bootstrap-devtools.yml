@@ -16,7 +16,7 @@
     - name: check if sdkman is installed
       ansible.builtin.stat:
         path: "{{ ansible_env.HOME }}/.sdkman/bin/sdkman-init.sh"
-      register: sdkman_exists
+      register: sdkman_init
       ignore_errors: yes
     - name: Download Cargo Installer
       when: cargo_exists is failed
@@ -52,16 +52,14 @@
           path: "{{ ansible_env.HOME}}/.local/bin/go"
         - src: "{{ ansible_env.HOME}}/.local/go/bin/gofmt"
           path: "{{ ansible_env.HOME}}/.local/bin/gofmt"
-
-    # sdkman ?
     - name: download sdkman
-      when: sdkman_exists is failed
+      when: sdkman_init.stat.exists is false
       ansible.builtin.get_url:
         url: "https://get.sdkman.io?rcupdate=false"
         dest: "/tmp/sdkman-inst.sh"
         mode: "a+x"
     - name: install sdkman
-      when: sdkman_exists is failed
+      when: sdkman_init.stat.exists is false
       ansible.builtin.script: /tmp/sdkman-inst.sh
     # sdkman java, quarkus, maven, gradle ?
     # nvm ?
