@@ -19,6 +19,8 @@ Inspired by -
   - `ansible-playbook bootstrap-packages.yml --ask-become-pass`
   - `ansible-playbook bootstrap-playbook.yml`
   - `ansible-playbook bootstrap-devtools.yml`
-- get plugins installed for vim (maybe this can be an ansible task?)
-  - `vim`
-  - `:PlugUpdate`
+- manual stuff
+  - get plugins installed for vim (maybe this can be an ansible task?)
+    - `vim +PlugUpdate`
+  - install fzf
+    - `~/.fzf/install.sh`
