@@ -18,6 +18,11 @@
         path: "{{ ansible_env.HOME }}/.sdkman/bin/sdkman-init.sh"
       register: sdkman_init
       ignore_errors: yes
+    - name: check if nvm is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.nvm/"
+        register: nvm
+        ignore_errors: yes
     - name: Download Cargo Installer
       when: cargo_exists is failed
       ansible.builtin.get_url:
@@ -47,11 +52,26 @@
         url: "https://get.sdkman.io?rcupdate=false"
         dest: "/tmp/sdkman-inst.sh"
         mode: "a+x"
+      tags:
+        - sdkman
     - name: install sdkman
       when: sdkman_init.stat.exists is false
       ansible.builtin.script: /tmp/sdkman-inst.sh
-    # sdkman java, quarkus, maven, gradle ?
-    # nvm ?
+      tags:
+        - sdkman
+    - name: download installer for nvm
+      when: nvm.stat.exists is false
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"
+        dest: "/tmp/nvm-install.sh"
+        mode: "a+x"
+      tags:
+        - nvm
+    - name: install nvm
+      when: nvm.stat.exists is false
+      ansible.builtin.script: /tmp/nvm-install.sh
+      tags:
+        - nvm
     - name: install minikube
       when: minikube_exists is failed
       ansible.builtin.get_url:
@@ -64,5 +84,3 @@
       ansible.builtin.copy:
         src: "files/bashrc.d/"
         dest: "{{ ansible_env.HOME}}/.bashrc.d"
-
-
