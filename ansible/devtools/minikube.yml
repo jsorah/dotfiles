@@ -1,0 +1,11 @@
+---
+- name: check if minikube is installed
+  ansible.builtin.shell: command -v minikube
+  register: minikube_exists
+  ignore_errors: yes
+- name: install minikube
+  when: minikube_exists is failed
+  ansible.builtin.get_url:
+    url: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
+    dest: "{{ ansible_env.HOME }}/.local/bin/minikube"
+    mode: "a+x"

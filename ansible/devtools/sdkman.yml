@@ -1,0 +1,19 @@
+---
+- name: check if sdkman is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.sdkman/bin/sdkman-init.sh"
+  register: sdkman_init
+  ignore_errors: yes
+- name: download sdkman
+  when: sdkman_init.stat.exists is false
+  ansible.builtin.get_url:
+    url: "https://get.sdkman.io?rcupdate=false"
+    dest: "/tmp/sdkman-inst.sh"
+    mode: "a+x"
+- name: install sdkman
+  when: sdkman_init.stat.exists is false
+  ansible.builtin.script: /tmp/sdkman-inst.sh
+- name: delete sdkman installer file
+  ansible.builtin.file:
+    path: "/tmp/sdkman-inst.sh"
+    state: "absent"

@@ -1,0 +1,19 @@
+---
+- name: check if nvm is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.nvm/"
+  register: nvm
+  ignore_errors: yes
+- name: download installer for nvm
+  when: nvm.stat.exists is false
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"
+    dest: "/tmp/nvm-install.sh"
+    mode: "a+x"
+- name: install nvm
+  when: nvm.stat.exists is false
+  ansible.builtin.script: /tmp/nvm-install.sh
+- name: delete nvm installer file
+  ansible.builtin.file:
+    path: "/tmp/nvm-install.sh"
+    state: "absent"

@@ -1,85 +1,17 @@
 ---
 - hosts: localhost 
   tasks:
-    - name: check if cargo is installed
-      ansible.builtin.shell: command -v cargo
-      register: cargo_exists
-      ignore_errors: yes
-    - name: check if go is installed
-      ansible.builtin.shell: command -v go
-      register: go_exists
-      ignore_errors: yes
-    - name: check if minikube is installed
-      ansible.builtin.shell: command -v minikube
-      register: minikube_exists
-      ignore_errors: yes
-    - name: check if sdkman is installed
-      ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.sdkman/bin/sdkman-init.sh"
-      register: sdkman_init
-      ignore_errors: yes
-    - name: check if nvm is installed
-      ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/.nvm/"
-        register: nvm
-        ignore_errors: yes
-    - name: Download Cargo Installer
-      when: cargo_exists is failed
-      ansible.builtin.get_url:
-        url: https://sh.rustup.rs
-        dest: /tmp/sh.rustup.rs
-        mode: '0755'
-        force: 'yes'
-      tags:
-        - rust
-    - name: install rust/cargo
-      when: cargo_exists is failed
-      ansible.builtin.shell: /tmp/sh.rustup.rs -y
-      tags:
-        - rust
-    # go
-    - name: install go
-      when: go_exists is failed
-      ansible.builtin.unarchive:
-        src: https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
-        remote_src: yes
-        dest: "{{ ansible_env.HOME}}/.local/"
-      tags:
-        - go
-    - name: download sdkman
-      when: sdkman_init.stat.exists is false
-      ansible.builtin.get_url:
-        url: "https://get.sdkman.io?rcupdate=false"
-        dest: "/tmp/sdkman-inst.sh"
-        mode: "a+x"
-      tags:
-        - sdkman
-    - name: install sdkman
-      when: sdkman_init.stat.exists is false
-      ansible.builtin.script: /tmp/sdkman-inst.sh
-      tags:
-        - sdkman
-    - name: download installer for nvm
-      when: nvm.stat.exists is false
-      ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"
-        dest: "/tmp/nvm-install.sh"
-        mode: "a+x"
-      tags:
-        - nvm
-    - name: install nvm
-      when: nvm.stat.exists is false
-      ansible.builtin.script: /tmp/nvm-install.sh
-      tags:
-        - nvm
-    - name: install minikube
-      when: minikube_exists is failed
-      ansible.builtin.get_url:
-        url: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
-        dest: "{{ ansible_env.HOME }}/.local/bin/minikube"
-        mode: "a+x"
-      tags:
-        - minikube
+    - name: install tools
+      ansible.builtin.include_tasks: 
+       file: "devtools/{{item}}.yml"
+       apply:
+         tags: "{{item}}"      
+      loop:
+        - "go"
+        - "rust"
+        - "minikube"
+        - "sdkman"
+        - "nvm"
     - name: copy bashrc.d files
       ansible.builtin.copy:
         src: "files/bashrc.d/"
