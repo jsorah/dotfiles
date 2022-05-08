@@ -24,3 +24,5 @@ Inspired by -
     - `vim +PlugUpdate`
   - install fzf
     - `~/.fzf/install.sh`
+  - install gitmux
+    - `cd repos-software/gitmux && go install`
