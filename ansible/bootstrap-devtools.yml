@@ -41,17 +41,6 @@
         dest: "{{ ansible_env.HOME}}/.local/"
       tags:
         - go
-    - name: link to go bins
-      when: go_exists is failed
-      ansible.builtin.file:
-        src: "{{ item.src }}"
-        path: "{{ item.path }}"
-        state: "link"
-      loop:
-        - src: "{{ ansible_env.HOME}}/.local/go/bin/go"
-          path: "{{ ansible_env.HOME}}/.local/bin/go"
-        - src: "{{ ansible_env.HOME}}/.local/go/bin/gofmt"
-          path: "{{ ansible_env.HOME}}/.local/bin/gofmt"
     - name: download sdkman
       when: sdkman_init.stat.exists is false
       ansible.builtin.get_url:
