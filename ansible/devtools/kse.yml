@@ -5,3 +5,7 @@
     dest: "{{ ansible_env.HOME }}/.local/tools/"
     src: "https://github.com/kaikramer/keystore-explorer/releases/download/v5.5.1/kse-551.zip"
     remote_src: yes
+- name: "install desktop shortcut"
+  ansible.builtin.template:
+    dest: "{{ ansible_env.HOME}}/.local/share/applications/keystore-explorer.desktop"
+    src: "../files/keystore-explorer.desktop.j2"
