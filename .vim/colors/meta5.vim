@@ -15,7 +15,7 @@ let colors_name = "meta5"
 
 " Vim >= 7.0 specific colors
 if version >= 700
-  hi CursorLine   guibg=#262626 gui=NONE ctermbg=234 cterm=NONE
+  " hi CursorLine   guibg=#262626 gui=NONE ctermbg=234 cterm=NONE
   hi CursorColumn guifg=#ffffff guibg=#303030 ctermbg=238
   hi iCursor      guifg=#000000 guibg=#d0d0d0 ctermfg=0 ctermbg=252
   hi Incsearch    guifg=#ff00ff guibg=NONE gui=underline ctermfg=201 ctermbg=NONE cterm=underline
@@ -35,7 +35,8 @@ hi Error          guifg=#ffffff guibg=#ff0000 gui=underline ctermfg=15 ctermbg=9
 hi Folded         guifg=#005f5f guibg=#080808 ctermfg=23 ctermbg=0
 hi LineNr         guifg=#808080 guibg=NONE ctermfg=244 ctermbg=NONE
 hi NonText        guifg=#5f5fff ctermfg=63
-hi Normal         guifg=#bcbcbc guibg=#1c1c1c ctermfg=250 ctermbg=233
+" hi Normal         guifg=#bcbcbc guibg=#1c1c1c ctermfg=250 ctermbg=233
+hi Normal         guifg=#bcbcbc guibg=#1c1c1c ctermfg=250 ctermbg=0
 hi SpecialKey     guifg=#808080 ctermfg=244 guibg=NONE ctermbg=NONE
 hi StatusLine     guifg=#005f5f guibg=#080808 gui=underline ctermfg=23 ctermbg=232 cterm=underline term=underline
 hi StatusLineNC   guifg=#585858 guibg=#080808 ctermfg=240 ctermbg=232
