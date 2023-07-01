@@ -30,5 +30,5 @@ Inspired by -
   - install gitmux
     - `cd repos-software/gitmux && go install`
   - install starship
-    - `curl -sS https://starship.rs/install.sh | sh -s - --bin-dir=/home/${USERNAME}/.local/bin
+    - `curl -sS https://starship.rs/install.sh | sh -s - --bin-dir=/home/${USERNAME}/.local/bin`
     - add the eval to ~/.bashrc
