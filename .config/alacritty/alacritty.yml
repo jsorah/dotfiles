@@ -47,4 +47,6 @@ font:
   # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
   # screens and make reading text a little easier.
   scale_with_dpi: true
+env:
+  TERM: xterm-256color
 
